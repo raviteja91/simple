@@ -1,0 +1,9 @@
+{% extends "blog/bbase.html" %}
+
+{% block content %}
+<h2>{{post.title}}</h2>
+<li>
+{{post.created}} 
+{{post.body|linebreaks}}
+</li>
+{% endblock %}

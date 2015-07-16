@@ -1,0 +1,28 @@
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
+from django.core.urlresolvers import reverse
+from django.shortcuts import render_to_response
+#from django.http import HttpResponse
+#from django.template import Context,loader
+
+from blog.models import *
+
+def main(request):
+    posts = Post.objects.all().order_by("-created")
+    paginator = Paginator(posts, 2)
+
+    try: page = int(request.GET.get("page", '1'))
+    except ValueError: page = 1
+
+    try:
+        posts = paginator.page(page)
+    except (InvalidPage, EmptyPage):
+        posts = paginator.page(paginator.num_pages)
+    #t=loader.get_template('blog/list.html')
+    #c=Context(request,dict(posts=posts,user=request.user))
+
+    return render_to_response("blog/list.html", dict(posts=posts, user=request.user))
+    
+def blog_detail(request,bid=''):
+    id=request.GET.get('bid')
+    post = Post.objects.get(id=id)
+    return render_to_response("blog/detail.html", locals())

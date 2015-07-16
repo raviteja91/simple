@@ -1,0 +1,9 @@
+<ul>
+    {% for post in posts.object_list %}
+          <div class="title">{{ post.title }}</div>
+          <ul>
+              <div class="time">{{ post.created }}</div>
+              <div class="body">{{ post.body|linebreaks }}</div>
+          </ul>
+    {% endfor %}
+</ul>
